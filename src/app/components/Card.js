@@ -15,8 +15,8 @@ export default function Card({ data }) {
             ? `https:${data.image}`
             : data.image
         }
-        width={500}
-        height={500}
+        width={600}
+        height={600}
         className="w-full"
         alt={data.name}
         unoptimized={true}
