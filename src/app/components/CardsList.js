@@ -11,10 +11,6 @@ export default function CardList() {
   const { data, error } = useSWR("/api/sheets/", fetcher);
 
   // useMemo to re-calculate the filtered data only when `data` or `filterText` changes
-  const filteredData = useMemo(() => {
-    if (!data) return [];
-    return data;
-  }, [data, filterText]);
 
   const handleSearch = (text) => {
     setFilterText(text);
@@ -28,7 +24,7 @@ export default function CardList() {
       <SearchBar onSearch={handleSearch} filterText={filterText} />
       <h2>Current promotions for “{filterText || ""}”</h2>
       <div className="w-[80%] m-auto grid grid-cols-2 md:grid-cols-4 gap-2">
-        {filteredData.map((item, index) => (
+        {data.map((item, index) => (
           <Card key={index} data={item} />
         ))}
       </div>
