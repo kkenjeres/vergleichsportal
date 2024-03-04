@@ -1,7 +1,9 @@
 import Image from "next/image";
-
-export default function Home() {
+import CardsList from "./components/CardsList";
+export default async function Home() {
   return (
-    <main></main>
+    <main>
+      <CardsList />
+    </main>
   );
 }

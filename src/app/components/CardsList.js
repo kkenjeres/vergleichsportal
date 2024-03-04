@@ -1,8 +1,9 @@
-import Card from "./Card";
 
+import React from "react";
+import Card from "../components/Card";
 const CardsList = () => {
   return (
-    <div>
+    <div className="">
       <Card />
     </div>
   );
