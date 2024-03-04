@@ -1,4 +1,3 @@
-
 import { google } from "googleapis";
 
 export async function GET(req) {
