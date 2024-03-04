@@ -7,8 +7,8 @@ export async function GET(req) {
   try {
     const auth = new google.auth.JWT(
       process.env.GOOGLE_CLIENT_EMAIL,
-      null, // ключ файла не требуется, так как вы передаете приватный ключ напрямую
-      process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Замените \\n на перенос строки
+      null,
+      process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
       ["https://www.googleapis.com/auth/spreadsheets.readonly"]
     );
 

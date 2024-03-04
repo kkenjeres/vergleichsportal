@@ -5,7 +5,7 @@ export default function Card({ data }) {
     <Link
       href={`/products/${data.id}`}
       key={data.name}
-      className="rounded-xl border shadow-xl  p-2"
+      className="rounded-xl bg-white flex flex-col justify-between hover:shadow-xl p-2 hover:scale-[1.01]  transition-all  duration-300"
     >
       <Image
         src={
@@ -17,7 +17,7 @@ export default function Card({ data }) {
         }
         width={600}
         height={600}
-        className="w-full"
+        className="w-full max-h-[300px]"
         alt={data.name}
         unoptimized={true}
       />

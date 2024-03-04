@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Card from "./Card";
 import SearchBar from "./SearchBar";
 
@@ -8,7 +8,7 @@ export default function CardList() {
   const [error, setError] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +90,9 @@ export default function CardList() {
             key={page}
             onClick={() => setPage(page)}
             className={`mx-1 px-3 py-1 rounded focus:outline-none ${
-              currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+              currentPage === page
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
             }`}
           >
             {page}

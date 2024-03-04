@@ -16,19 +16,37 @@ const ProductPage = () => {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <section>
-       <Head>
-        <title>{product ? `${product.name} - Special Offers` : "Loading..."}</title>
-        <meta name="description" content={product ? `Check out the amazing deals for ${product.name}. Find the best prices and more details.` : "Product details loading..."} />
-        {/* Добавьте другие мета-теги для SEO здесь */}
-        <meta property="og:title" content={product ? `${product.name} - Special Offers` : "Loading..."} />
-        <meta property="og:description" content={product ? `Discover great deals for ${product.name} with us.` : "Product details loading..."} />
+    <section className="h-screen">
+      <Head>
+        <title>
+          {product ? `${product.name} - Special Offers` : "Loading..."}
+        </title>
+        <meta
+          name="description"
+          content={
+            product
+              ? `Check out the amazing deals for ${product.name}. Find the best prices and more details.`
+              : "Product details loading..."
+          }
+        />
+        <meta
+          property="og:title"
+          content={product ? `${product.name} - Special Offers` : "Loading..."}
+        />
+        <meta
+          property="og:description"
+          content={
+            product
+              ? `Discover great deals for ${product.name} with us.`
+              : "Product details loading..."
+          }
+        />
         <meta property="og:image" content={product ? product.image : ""} />
         <meta property="og:type" content="product" />
       </Head>
       <BackButton />
 
-      <div className="rounded-xl border shadow-xl p-2 m-auto flex flex-col">
+      <div className="rounded-xl border shadow-xl p-2 m-auto flex flex-col bg-white items-center h-full ">
         {product.image && (
           <Image
             src={
