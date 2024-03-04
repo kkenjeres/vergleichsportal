@@ -5,9 +5,13 @@ export async function GET(req) {
   const id = searchParams.get("id");
 
   try {
-    const auth = await google.auth.getClient({
-      scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
-    });
+    const auth = new google.auth.JWT(
+      process.env.GOOGLE_CLIENT_EMAIL,
+      null, // ключ файла не требуется, так как вы передаете приватный ключ напрямую
+      process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"), // Замените \\n на перенос строки
+      ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+    );
+
     const sheets = google.sheets({ version: "v4", auth });
     const spreadsheetId = process.env.GOOGLE_SHEET_ID;
     const range = "Master!A:H";
