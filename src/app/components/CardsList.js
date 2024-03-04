@@ -13,17 +13,13 @@ export default function CardList() {
   // useMemo to re-calculate the filtered data only when `data` or `filterText` changes
   const filteredData = useMemo(() => {
     if (!data) return [];
-    return data
-      .filter((item) =>
-        item.name.toLowerCase().includes(filterText.toLowerCase())
-      )
-      .slice(0, 10); // Also limit to the first 10 elements after filtering
+    return data;
   }, [data, filterText]);
 
   const handleSearch = (text) => {
     setFilterText(text);
   };
-
+  console.log(data);
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
 
