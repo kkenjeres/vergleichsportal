@@ -1,20 +1,34 @@
 "use client";
-import React, { useState, useMemo } from "react";
-import useSWR from "swr";
+import React, { useState, useEffect, useMemo } from "react";
 import Card from "./Card";
 import SearchBar from "./SearchBar";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
 export default function CardList() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { data, error } = useSWR("/api/sheets/", fetcher);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/sheets/");
+        if (!response.ok) {
+          throw new Error("Network response was not OK");
+        }
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const filteredData = useMemo(() => {
-    if (!data) return [];
     return data.filter((item) =>
       item.name.toLowerCase().includes(filterText.toLowerCase())
     );
@@ -35,20 +49,17 @@ export default function CardList() {
   };
 
   if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
+  if (!data.length) return <div>Loading...</div>;
 
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  // Вычисляем диапазон кнопок для пагинации
   const range = (start, end) => {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   };
 
-  // Определяем начальную и конечную страницы диапазона
   let startPage = Math.max(1, currentPage - 1);
   let endPage = Math.min(currentPage + 1, totalPages);
 
-  // Если текущая страница близка к краям, корректируем диапазон
   if (currentPage === 1) {
     endPage = Math.min(3, totalPages);
   } else if (currentPage === totalPages) {
@@ -79,9 +90,7 @@ export default function CardList() {
             key={page}
             onClick={() => setPage(page)}
             className={`mx-1 px-3 py-1 rounded focus:outline-none ${
-              currentPage === page
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+              currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"
             }`}
           >
             {page}
