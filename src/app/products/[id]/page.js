@@ -7,7 +7,9 @@ import BackButton from "../../ui/BackButton";
 import Head from "next/head";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { RiArrowRightUpLine } from "react-icons/ri";
 
+import Link from "next/link";
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const ProductPage = () => {
@@ -18,7 +20,33 @@ const ProductPage = () => {
 
   return (
     <section className="h-full bg-gray-100">
-      <Head>{/* Meta tags as before */}</Head>
+      <Head>
+        <title>
+          {product ? `${product.name} - Special Offers` : "Loading..."}
+        </title>
+        <meta
+          name="description"
+          content={
+            product
+              ? `Check out the amazing deals for ${product.name}. Find the best prices and more details.`
+              : "Product details loading..."
+          }
+        />
+        <meta
+          property="og:title"
+          content={product ? `${product.name} - Special Offers` : "Loading..."}
+        />
+        <meta
+          property="og:description"
+          content={
+            product
+              ? `Discover great deals for ${product.name} with us.`
+              : "Product details loading..."
+          }
+        />
+        <meta property="og:image" content={product ? product.image : ""} />
+        <meta property="og:type" content="product" />
+      </Head>
       <div className=" mx-auto px-4 py-6">
         <BackButton />
         <div className="w-full max-w-4xl mx-auto">
@@ -46,8 +74,15 @@ const ProductPage = () => {
                   </span>
                 </div>
                 <p className="text-gray-600">{product.store}</p>
+                <Link href={product.url} target="_blank">
+                  <small className="flex items-center underline my-3">
+                    Zum Shop gehen
+                    <RiArrowRightUpLine />
+                  </small>
+                </Link>
                 <p className="text-sm text-gray-400 mt-2">
-                  Updated on: {new Date(product.updateDate).toLocaleDateString()}
+                  Updated on:{" "}
+                  {new Date(product.updateDate).toLocaleDateString()}
                 </p>
               </div>
             </div>
