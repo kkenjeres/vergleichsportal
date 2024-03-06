@@ -1,5 +1,4 @@
 "use client";
-// SearchBar.js
 import React from "react";
 import { useQueryState } from "nuqs";
 

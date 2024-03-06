@@ -10,7 +10,7 @@ export default function CardList() {
   const [error, setError] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true); // Новое состояние для отслеживания загрузки
+  const [isLoading, setIsLoading] = useState(true); 
 
   const itemsPerPage = 12;
 
@@ -27,7 +27,7 @@ export default function CardList() {
         console.error("Error fetching data:", error);
         setError(error);
       } finally {
-        setIsLoading(false); // Указываем, что загрузка завершена
+        setIsLoading(false); 
       }
     };
 

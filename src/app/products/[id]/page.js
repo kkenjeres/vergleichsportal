@@ -17,16 +17,13 @@ const ProductPage = () => {
   const { data: product, error } = useSWR(`/api/sheets/?id=${id}`, fetcher);
 
   if (error) return <div>Failed to load</div>;
-  // Проверяем, загружен ли продукт и имеет ли поле image
   if (!product || !product.image) {
     return <Skeleton height={300} />;
   }
 
-  // Обрабатываем поле image, чтобы учесть возможность множественных URL
   const imageUrls = product.image.split(",").map((url) => url.trim());
   const firstImageUrl = imageUrls[0];
 
-  // Применяем преобразования URL для высокого качества изображения
   const highQualityImageURL = firstImageUrl
     .replace("/15_15/", "/860_860/")
     .replace("/15_21/", "/860_860/")
@@ -34,7 +31,36 @@ const ProductPage = () => {
 
   return (
     <section className="h-full bg-gray-100">
-      <Head>{/* Meta tags as before */}</Head>
+      <Head>
+        <title>
+          {product ? `${product.name} - Sonderangebote` : "Sonderangebote"}
+        </title>
+        <meta
+          name="description"
+          content={
+            product
+              ? `Entdecken Sie die erstaunlichen Angebote für ${product.name}. Finden Sie die besten Preise und mehr Details.`
+              : "Entdecken Sie unsere Sonderangebote."
+          }
+        />
+        <meta
+          property="og:title"
+          content={
+            product ? `${product.name} - Sonderangebote` : "Sonderangebote"
+          }
+        />
+        <meta
+          property="og:description"
+          content={
+            product
+              ? `Entdecken Sie tolle Angebote für ${product.name} bei uns.`
+              : "Entdecken Sie unsere Sonderangebote."
+          }
+        />
+        <meta property="og:image" content={product ? product.image : ""} />
+        <meta property="og:type" content="product" />
+      </Head>
+
       <div className=" mx-auto px-4 py-6">
         <BackButton />
         <div className="w-full max-w-4xl mx-auto">
