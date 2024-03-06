@@ -51,6 +51,7 @@ export async function GET(req) {
         originalPrice: productData[4],
         discountPrice: productData[5],
         updateDate: productData[6],
+        store: productData[7],
       };
     } else {
       dataToSend = rows.slice(1).map((row, index) => ({
@@ -61,6 +62,7 @@ export async function GET(req) {
         originalPrice: row[4],
         discountPrice: row[5],
         updateDate: row[6],
+        store: row[7],
       }));
     }
 

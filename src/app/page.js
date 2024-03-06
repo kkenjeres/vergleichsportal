@@ -1,8 +1,12 @@
-import CardsList from "./components/CardsList";
-export default async function Home() {
+import React, { Suspense } from 'react';
+const CardsList = React.lazy(() => import('./components/CardsList'));
+
+export default function Home() {
   return (
     <main>
-      <CardsList />
+      <Suspense fallback={<div>Loading...</div>}>
+        <CardsList />
+      </Suspense>
     </main>
   );
 }

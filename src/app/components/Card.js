@@ -1,31 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
+
 export default function Card({ data }) {
+  const productNameEncoded = encodeURIComponent(data.name);
+  const highQualityImageURL = data.image.replace("/15_15/", "/860_860/");
+
   return (
     <Link
-      href={`/products/${data.id}`}
-      key={data.name}
-      className="rounded-xl bg-white flex flex-col justify-between hover:shadow-xl p-2 hover:scale-[1.01]  transition-all  duration-300"
+      href={`/products/${data.id}/?name=${productNameEncoded}`}
+      className="rounded-xl p-4 hover:scale-[1.01] bg-white shadow-md hover:shadow-lg flex flex-col h-full transition-all duration-300 overflow-hidden"
     >
-      <Image
-        src={
-          data.image.includes("/15_15/")
-            ? `https:${data.image.replace(/\/15_15\//, "/860_860/")}`
-            : data.image.startsWith("//")
-            ? `https:${data.image}`
-            : data.image
-        }
-        width={600}
-        height={600}
-        className="w-full max-h-[300px]"
-        alt={data.name}
-        unoptimized={true}
-      />
-      <div className="mt-10 flex flex-col gap-2">
-        <p>{data.name}</p>
-        <p>originalPrice: {data.originalPrice}</p>
-        <p>discountPrice: {data.discountPrice}</p>
-        <p>{data.updateDate}</p>
+      <div className="relative w-full h-56">
+        <Image
+          src={highQualityImageURL}
+          layout="fill"
+          objectFit="cover"
+          alt={data.name}
+          unoptimized={true}
+        />
+      </div>
+      <div className="flex flex-col justify-between flex-1 mt-4">
+        <p className="text-lg font-semibold text-gray-900">{data.name}</p>
+        <div>
+          <p className="text-sm text-gray-500 line-through">
+            {data.originalPrice}€
+          </p>
+          <p className="text-xl font-semibold text-green-600">
+            {data.discountPrice}€
+          </p>
+          <p className="text-sm text-gray-500">{data.store}</p>
+          <p className="text-xs text-gray-400">
+            {new Date(data.updateDate).toLocaleDateString()}
+          </p>
+        </div>
       </div>
     </Link>
   );
