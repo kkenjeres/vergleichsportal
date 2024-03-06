@@ -7,8 +7,8 @@ const Nav = () => {
         <Link href="/">
           <li className="hover:underline">Home</li>
         </Link>
-        <Link href={`/aktionnen/?category=bier`}>
-          <li className="hover:underline">Aktionnen</li>
+        <Link href={`/aktionen`}>
+          <li className="hover:underline">Aktionen</li>
         </Link>
       </ul>
     </nav>
