@@ -37,7 +37,7 @@ export default function CardList() {
   const filteredData = useMemo(
     () =>
       data.filter((item) =>
-        item.name.toLowerCase().includes(filterText.toLowerCase())
+        item.store.toLowerCase().includes(filterText.toLowerCase())
       ),
     [data, filterText]
   );

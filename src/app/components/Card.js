@@ -3,8 +3,15 @@ import Link from "next/link";
 
 export default function Card({ data }) {
   const productNameEncoded = encodeURIComponent(data.name);
-  const highQualityImageURL = data.image.replace("/15_15/", "/860_860/");
+  const imageUrls = data.image.split(",").map((url) => url.trim());
+  // Берём первый URL из массива для отображения
+  const firstImageUrl = imageUrls[0];
 
+  // Применяем преобразование к первому URL для обоих случаев
+  let highQualityImageURL = firstImageUrl
+    .replace("/15_15/", "/860_860/")
+    .replace("/15_21/", "/860_860/")
+    .replace("/v-w-480-h-360", "/v-w-860-h-860");
   return (
     <Link
       href={`/products/${data.id}/?name=${productNameEncoded}`}

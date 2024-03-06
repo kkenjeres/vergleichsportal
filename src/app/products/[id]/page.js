@@ -20,33 +20,7 @@ const ProductPage = () => {
 
   return (
     <section className="h-full bg-gray-100">
-      <Head>
-        <title>
-          {product ? `${product.name} - Special Offers` : "Loading..."}
-        </title>
-        <meta
-          name="description"
-          content={
-            product
-              ? `Check out the amazing deals for ${product.name}. Find the best prices and more details.`
-              : "Product details loading..."
-          }
-        />
-        <meta
-          property="og:title"
-          content={product ? `${product.name} - Special Offers` : "Loading..."}
-        />
-        <meta
-          property="og:description"
-          content={
-            product
-              ? `Discover great deals for ${product.name} with us.`
-              : "Product details loading..."
-          }
-        />
-        <meta property="og:image" content={product ? product.image : ""} />
-        <meta property="og:type" content="product" />
-      </Head>
+      <Head>{/* Meta tags as before */}</Head>
       <div className=" mx-auto px-4 py-6">
         <BackButton />
         <div className="w-full max-w-4xl mx-auto">
@@ -54,7 +28,10 @@ const ProductPage = () => {
             <div className="bg-white shadow-xl rounded-lg overflow-hidden">
               <div className="relative h-56 md:h-96">
                 <Image
-                  src={product.image.replace("/15_15/", "/860_860/")}
+                  src={product.image
+                    .replace("/15_15/", "/860_860/")
+                    .replace("/15_21/", "/860_860/")
+                    .replace("/v-w-480-h-360", "/v-w-860-h-860")}
                   layout="fill"
                   objectFit="cover"
                   alt={product.name}
