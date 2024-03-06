@@ -37,7 +37,7 @@ export default function CardList() {
   const filteredData = useMemo(
     () =>
       data.filter((item) =>
-        item.store.toLowerCase().includes(filterText.toLowerCase())
+        item.name.toLowerCase().includes(filterText.toLowerCase())
       ),
     [data, filterText]
   );
@@ -76,16 +76,17 @@ export default function CardList() {
     <div className="m-auto text-center mt-20 w-[90%] md:w-[80%]">
       <SearchBar onSearch={handleSearch} />
       <div className="m-auto grid grid-cols-2 md:grid-cols-4 gap-2 mt-10">
-  {isLoading
-    ? Array.from({ length: itemsPerPage }, (_, index) => (
-        <div key={index} className="p-4">
-          <Skeleton height={200} />
-          <Skeleton count={3} />
-        </div>
-      ))
-    : paginatedData.map((item, index) => <Card key={index} data={item} />)
-  }
-</div>
+        {isLoading
+          ? Array.from({ length: itemsPerPage }, (_, index) => (
+              <div key={index} className="p-4">
+                <Skeleton height={200} />
+                <Skeleton count={3} />
+              </div>
+            ))
+          : paginatedData.map((item, index) => (
+              <Card key={index} data={item} />
+            ))}
+      </div>
       <div className="flex justify-center my-20">
         <button
           onClick={() => setPage(Math.max(currentPage - 1, 1))}
