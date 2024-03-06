@@ -17,6 +17,20 @@ const ProductPage = () => {
   const { data: product, error } = useSWR(`/api/sheets/?id=${id}`, fetcher);
 
   if (error) return <div>Failed to load</div>;
+  // Проверяем, загружен ли продукт и имеет ли поле image
+  if (!product || !product.image) {
+    return <Skeleton height={300} />;
+  }
+
+  // Обрабатываем поле image, чтобы учесть возможность множественных URL
+  const imageUrls = product.image.split(",").map((url) => url.trim());
+  const firstImageUrl = imageUrls[0];
+
+  // Применяем преобразования URL для высокого качества изображения
+  const highQualityImageURL = firstImageUrl
+    .replace("/15_15/", "/860_860/")
+    .replace("/15_21/", "/860_860/")
+    .replace("/v-w-480-h-360", "/v-w-860-h-860");
 
   return (
     <section className="h-full bg-gray-100">
@@ -28,12 +42,9 @@ const ProductPage = () => {
             <div className="bg-white shadow-xl rounded-lg overflow-hidden">
               <div className="relative h-56 md:h-96">
                 <Image
-                  src={product.image
-                    .replace("/15_15/", "/860_860/")
-                    .replace("/15_21/", "/860_860/")
-                    .replace("/v-w-480-h-360", "/v-w-860-h-860")}
+                  src={highQualityImageURL}
                   layout="fill"
-                  objectFit="cover"
+                  objectFit="contain"
                   alt={product.name}
                   unoptimized={true}
                 />
