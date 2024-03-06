@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { Suspense } from "react";
 const CardsList = React.lazy(() => import("./components/CardsList"));
 export default function Home() {

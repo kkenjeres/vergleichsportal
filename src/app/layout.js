@@ -13,7 +13,6 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className="bg-[#F4F4F4]">
         <Nav />
-
         {children}
       </body>
     </html>
