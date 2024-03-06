@@ -10,7 +10,7 @@ export default function CardList() {
   const [error, setError] = useState(null);
   const [filterText, setFilterText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 12;
 
@@ -27,7 +27,7 @@ export default function CardList() {
         console.error("Error fetching data:", error);
         setError(error);
       } finally {
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     };
 
@@ -36,8 +36,10 @@ export default function CardList() {
 
   const filteredData = useMemo(
     () =>
-      data.filter((item) =>
-        item.name.toLowerCase().includes(filterText.toLowerCase())
+      data.filter(
+        (item) =>
+          item.name &&
+          item.name.toLowerCase().includes(filterText.toLowerCase())
       ),
     [data, filterText]
   );
@@ -74,6 +76,7 @@ export default function CardList() {
 
   return (
     <div className="m-auto text-center mt-20 w-[90%] md:w-[80%]">
+      
       <SearchBar onSearch={handleSearch} />
       <div className="m-auto grid grid-cols-2 md:grid-cols-4 gap-2 mt-10">
         {isLoading
