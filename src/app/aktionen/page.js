@@ -1,24 +1,16 @@
 import Link from "next/link";
-
+import { navCategories } from "../constants/index";
 const MainPage = () => {
-  const links = [
-    { path: "bier", name: "Bier" },
-    { path: "test", name: "Test" },
-  ];
-
   return (
-    <nav className=" p-4 w-full">
-      <ul className="flex justify-center gap-4">
-        {links.map(({ path, name }) => (
-          <li key={path} className="list-none">
-            <Link
-              href={`/aktionen/${path}`}
-              className="text-black hover:underline"
-            >
-              {name}
-            </Link>
-          </li>
-        ))}
+    <nav className="bg-white rounded-xl p-2 max-w-xs m-auto mt-10">
+      <ul className="flex justify-around">
+        {navCategories.map((link) => {
+          return (
+            <li key={link.route}>
+              <Link href={`/aktionen/${link.path}`}>{link.label}</Link>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   );
