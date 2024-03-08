@@ -37,9 +37,11 @@ export default function BeerCardList() {
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  const getPaginationGroup = () => {
-    let start = Math.floor((currentPage - 1) / 3) * 3;
-    return new Array(3).fill().map((_, idx) => start + idx + 1);
+  // Общее количество товаров
+  const totalItems = data.length;
+
+  const handleChangePage = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   const stores = [...new Set(data.map((item) => item.store))].join(", ");
@@ -52,19 +54,19 @@ export default function BeerCardList() {
         <title>Aktuelle Bieraktionen - Angebote von {stores}</title>
         <meta
           name="description"
-          content="Entdecken Sie die besten Bieraktionen und Angebote. Finden Sie Aktionen von ${stores} und genießen Sie Ihr Lieblingsbier zu günstigen Preisen."
+          content={`Entdecken Sie die besten Bieraktionen und Angebote. Finden Sie Aktionen von ${stores} und genießen Sie Ihr Lieblingsbier zu günstigen Preisen.`}
         />
         <meta property="og:title" content="Aktuelle Bieraktionen - Angebote" />
         <meta
           property="og:description"
-          content="Entdecken Sie die besten Bieraktionen und Angebote. Finden Sie Aktionen von ${stores} und genießen Sie Ihr Lieblingsbier zu günstigen Preisen."
+          content={`Entdecken Sie die besten Bieraktionen und Angebote. Finden Sie Aktionen von ${stores} und genießen Sie Ihr Lieblingsbier zu günstigen Preisen.`}
         />
         <meta property="og:type" content="website" />
       </Head>
       <div className="m-auto text-center mt-20 w-[90%] md:w-[80%]">
-        <p>Alle aktuellen Bier-Aktionen von {stores}</p>
+        <p>Alle aktuellen Bier-Aktionen von {stores}. Insgesamt {totalItems} Angebote.</p>
         <div className="m-auto grid grid-cols-2 md:grid-cols-4 gap-2 mt-10">
-        {isLoading ? (
+          {isLoading ? (
             Array.from({ length: itemsPerPage }, (_, index) => (
               <div key={index} className="p-4">
                 <Skeleton height={200} />
@@ -79,34 +81,27 @@ export default function BeerCardList() {
         </div>
         <div className="flex justify-center my-20">
           <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            onClick={() => handleChangePage(Math.max(currentPage - 1, 1))}
             disabled={currentPage === 1}
             className="mr-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
-            {"<"}
+            {"< Prev"}
           </button>
-          {getPaginationGroup().map((item, index) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
             <button
-              key={index}
-              onClick={() => setCurrentPage(item)}
-              disabled={item > totalPages}
-              className={`mx-2 px-4 py-2 rounded ${
-                currentPage === item
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-              }`}
+              key={page}
+              onClick={() => handleChangePage(page)}
+              className={`mx-1 px-3 py-1 rounded focus:outline-none ${currentPage === page ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"}`}
             >
-              {item}
+              {page}
             </button>
           ))}
           <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={() => handleChangePage(Math.min(currentPage + 1, totalPages))}
             disabled={currentPage === totalPages}
             className="ml-2 px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
           >
-            {">"}
+            {"Next >"}
           </button>
         </div>
       </div>
