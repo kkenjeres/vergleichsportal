@@ -17,13 +17,20 @@ const ProductPage = () => {
   const { data: product, error } = useSWR(`/api/sheets/?id=${id}`, fetcher);
 
   if (error) return <div>Failed to load</div>;
-  if (!product || !product.image) {
-    return <Skeleton height={300} />;
+  if (!product) {
+    return (
+      <div className="w-full max-w-4xl mx-auto">
+        <Skeleton height={300} />
+        <div className="p-4 md:p-6">
+          <Skeleton height={30} width={`60%`} />
+          <Skeleton count={3} />
+        </div>
+      </div>
+    );
   }
 
   const imageUrls = product.image.split(",").map((url) => url.trim());
   const firstImageUrl = imageUrls[0];
-
   const highQualityImageURL = firstImageUrl
     .replace("/15_15/", "/860_860/")
     .replace("/15_21/", "/860_860/")
@@ -64,7 +71,7 @@ const ProductPage = () => {
       <div className=" mx-auto px-4 py-6">
         <BackButton />
         <div className="w-full max-w-4xl mx-auto">
-          {product ? (
+          <>
             <div className="bg-white shadow-xl rounded-lg overflow-hidden">
               <div className="relative h-56 md:h-96">
                 <Image
@@ -81,10 +88,10 @@ const ProductPage = () => {
                 </h1>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center my-4">
                   <span className="text-lg md:text-xl font-semibold text-green-600">
-                    {product.discountPrice}€
+                    {product.discountPrice}
                   </span>
                   <span className="text-md text-gray-500 line-through mt-2 md:mt-0">
-                    {product.originalPrice}€
+                    {product.originalPrice}
                   </span>
                 </div>
                 <p className="text-gray-600">{product.store}</p>
@@ -100,16 +107,7 @@ const ProductPage = () => {
                 </p>
               </div>
             </div>
-          ) : (
-            <div className="bg-white shadow-xl rounded-lg overflow-hidden p-4 md:p-6">
-              <Skeleton height={300} />
-              <div className="space-y-4 mt-4">
-                <Skeleton count={1} height={30} />
-                <Skeleton count={1} height={20} />
-                <Skeleton count={1} height={20} width={`80%`} />
-              </div>
-            </div>
-          )}
+          </>
         </div>
       </div>
     </section>

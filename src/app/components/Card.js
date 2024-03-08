@@ -28,10 +28,10 @@ export default function Card({ data }) {
         <p className="text-lg font-semibold text-gray-900">{data.name}</p>
         <div>
           <p className="text-sm text-gray-500 line-through">
-            {data.originalPrice}€
+            {data.originalPrice}
           </p>
           <p className="text-xl font-semibold text-green-600">
-            {data.discountPrice}€
+            {data.discountPrice}
           </p>
           <p className="text-sm text-gray-500">{data.store}</p>
           <p className="text-xs text-gray-400">

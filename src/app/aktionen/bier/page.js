@@ -45,7 +45,6 @@ export default function BeerCardList() {
   const stores = [...new Set(data.map((item) => item.store))].join(", ");
 
   if (error) return <div>Failed to load</div>;
-  if (isLoading) return <Skeleton height={200} count={10} />;
 
   return (
     <>
@@ -65,11 +64,18 @@ export default function BeerCardList() {
       <div className="m-auto text-center mt-20 w-[90%] md:w-[80%]">
         <p>Alle aktuellen Bier-Aktionen von {stores}</p>
         <div className="m-auto grid grid-cols-2 md:grid-cols-4 gap-2 mt-10">
-          {data
-            .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((item, index) => (
-              <Card key={index} data={item} />
-            ))}
+        {isLoading ? (
+            Array.from({ length: itemsPerPage }, (_, index) => (
+              <div key={index} className="p-4">
+                <Skeleton height={200} />
+                <Skeleton count={3} />
+              </div>
+            ))
+          ) : (
+            data
+              .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+              .map((item, index) => <Card key={index} data={item} />)
+          )}
         </div>
         <div className="flex justify-center my-20">
           <button

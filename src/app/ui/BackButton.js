@@ -5,7 +5,7 @@ export default function BackButton() {
   return (
     <button
       onClick={() => router.push("/")}
-      className="rounded-full border flex items-center gap-2 border-black fixed z-10 top-10 px-3 py-1 "
+      className="rounded-full border flex items-center gap-2 border-black mb-2 px-3 py-1 text-[14px]"
     >
       <FaArrowLeft />
       zurück
