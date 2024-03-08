@@ -2,7 +2,7 @@ function createProductSlug(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://vergleichsportal.vercel.app";
 
 async function fetchAllProducts() {
   const apiURL = `${BASE_URL}/api/sheets/`;
